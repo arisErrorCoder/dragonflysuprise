@@ -1,6 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Carousel } from 'react-responsive-carousel';
+import { collection, getDocs } from 'firebase/firestore';
+import { fireDB } from '../Firebase/Firebase'; // Import your firebase config file
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import './SuprisePinnerPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,60 +34,34 @@ const SuprisePInnerPage = () => {
     { title: "Cancellation and Refund Policy", content: "Details about cancellation and refund policy..." },
     { title: "Other Useful Info", content: "Details about other useful info..." },
   ];
-  const products = [
-    {
-      id: 1,
-      name: "Extra 100 Balloons",
-      price: "₹ 600",
-      image: "https://via.placeholder.com/150/cake.jpg", // Replace with actual image URL
-    },
-    {
-      id: 2,
-      name: "15 Red Rose Bouquet",
-      price: "₹ 800",
-      image: "https://surpriseplanner.in/assets/photo/addon/addon_9055_1616137855.jpg", // Replace with actual image URL
-    },
-    {
-      id: 3,
-      name: "LED Love letters",
-      price: "₹ 500",
-      image: "https://via.placeholder.com/150/cake.jpg", // Replace with actual image URL
-    },
-    {
-      id: 4,
-      name: "Cake",
-      price: "₹ 700",
-      image: "https://surpriseplanner.in/assets/photo/addon/addon_2651_1615218135.jpeg", // Replace with actual image URL
-    },
-    {
-      id: 5,
-      name: "1 Hour Photographer",
-      price: "₹ 3500",
-      image: "https://via.placeholder.com/150/cake.jpg", // Replace with actual image URL
-    },
-    {
-      id: 6,
-      name: "1 Hour Photographer",
-      price: "₹ 3500",
-      image: "https://via.placeholder.com/150/cake.jpg", // Replace with actual image URL
-    },
-    {
-      id: 7,
-      name: "1 Hour Photographer",
-      price: "₹ 3500",
-      image: "https://via.placeholder.com/150/cake.jpg", // Replace with actual image URL
-    },
-  ];
-  
-    const sliderRef = useRef(null);
-  
-    const scrollLeft = () => {
-      sliderRef.current.scrollLeft -= 300; // Adjust the scroll amount as needed
+  const [addons, setAddons] = useState([]);
+  const sliderRef = useRef(null);
+
+  useEffect(() => {
+    const fetchAddons = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(fireDB, 'addons'));
+        const addonsArray = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setAddons(addonsArray);
+      } catch (error) {
+        console.error('Failed to fetch addons:', error);
+      }
     };
-  
-    const scrollRight = () => {
-      sliderRef.current.scrollLeft += 300;
-    };
+
+    fetchAddons();
+  }, []);
+
+  const scrollLeft = () => {
+    sliderRef.current.scrollLeft -= 300; // Adjust the scroll amount as needed
+  };
+
+  const scrollRight = () => {
+    sliderRef.current.scrollLeft += 300;
+  };
+
 
     const [showAll, setShowAll] = useState(false);
 
@@ -185,18 +161,23 @@ const SuprisePInnerPage = () => {
 
     {/* Addons Slider  */}
     <div className="Addons-slider-container">
-      <button className="prev-btn" onClick={scrollLeft}>
+    <button className="prev-btn" onClick={scrollLeft}>
         &#10094;
       </button>
       <div className="slider" ref={sliderRef}>
-        {products.map((product) => (
-          <div className="product-cards" key={product.id}>
-            <img src={product.image} alt={product.name} className="product-image" />
-            <h3>{product.name}</h3>
-            <p>{product.price}</p>
+        {addons.map((addon) => (
+          <div className="product-cards" key={addon.id}>
+            {/* Displaying the addon image, name, and price */}
+            <img
+              src={addon.image || 'https://via.placeholder.com/150'} // Use addon.image if available
+              alt={addon.name}
+              className="product-image"
+            />
+            <h3>{addon.name}</h3>
+            <p>{`₹${addon.price}`}</p>
             <div className="booking-section">
-              <input type="checkbox" id={`booking-${product.id}`} />
-              <label htmlFor={`booking-${product.id}`}>Add to Booking</label>
+              <input type="checkbox" id={`booking-${addon.id}`} />
+              <label htmlFor={`booking-${addon.id}`}>Add to Booking</label>
             </div>
           </div>
         ))}
