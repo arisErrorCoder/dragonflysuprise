@@ -14,12 +14,12 @@ body {
   
   .categories-container {
     width: 250px;
-    background-color: #000;
+    background-color: white;
     position: relative;
   }
   
   .categories-list h2{
-    color: #ddd;
+    color: #000000;
     font-size: larger;
     margin-left: 50px;
   }
@@ -35,9 +35,8 @@ body {
     display: flex;
     align-items: center;
     border-bottom: 1px solid #ddd;
-    color: #ddd;
+    color: #040000;
   }
-  
   .category-image {
     width: 30px;
     height: 30px;
@@ -101,15 +100,16 @@ body {
   }
   
   .view-detail-button:hover {
-    background-color: #8c923554;
+    background-color: #02000054;
+    color: rgb(252, 252, 252) !important;
   }
   
   /* Styles for the dropdown button */
+
   .dropdown-button {
     display: none; 
     background-color: #000;
     color: #fff;
-    padding: 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -118,7 +118,7 @@ body {
     width: 100% ;
     border: 0px;
     border-color: #000;
-    height: 20px;
+    height: 36px;
   }
   
   /* Styles for the dropdown menu */
@@ -131,22 +131,92 @@ body {
     list-style: none;
     padding: 0;
     margin: 0;
-    background-color: #000;
+    background-color: #ffffff;
     border-radius: 5px;
+    border: 1px solid black;
     z-index: 10; 
   }
   
   .dropdown-menu .category-item {
     padding: 10px;
-    color: #fff;
+    color: #000000;
+  }
+  .sort-buttons {
+    margin: 20px 10px;
+    display: flex;
   }
   
+  .sort-buttons button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .sort-buttons button:hover {
+    background-color: #0056b3;
+  }
+  
+  .price-slider {
+    margin: 20px 0;
+  }
+  
+  .price-slider h3 {
+    margin-bottom: 10px;
+  }
+  
+  .price-range-values {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .rc-slider {
+    margin: 20px 0;
+  }
+  
+  .rc-slider-track {
+    background-color: #007bff;
+  }
+  
+  .rc-slider-rail {
+    background-color: #ddd;
+  }
+  
+  .rc-slider-handle {
+    border-color: #007bff;
+    background-color: white;
+  }
+  
+  .rc-slider-handle:hover {
+    border-color: #0056b3;
+  }
+  
+  .rc-slider-mark {
+    color: #333;
+  }
   /* button:focus, button:focus-visible {
     outline: 0px ;
   } */
+  @media (max-width: 480px) {
+    .price-range-values {
+      font-size: 15px;
+    }
   
+    .sort-buttons button {
+      font-size: 10px;
+      padding: 5px 10px;
+    }
+    .price-slider {
+      margin: 20px auto;
+      width: 80%;
+        }
+  }
   /* Responsive styles for screens below 768px */
-  @media (max-width: 768px) {
+  @media (max-width: 430px) {
     .app-container {
       flex-direction: column;
     }
@@ -154,6 +224,7 @@ body {
     .categories-container {
       display: block;
       position: relative; 
+      background-color: white;
       width: 200px; 
     }
   
@@ -176,6 +247,7 @@ body {
       display: block;
       position: relative; 
       max-width: 385px; 
+      background-color: white;
       width: 100%;
     }
     
