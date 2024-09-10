@@ -26,7 +26,7 @@ const DinningInnerPage = () => {
     setActiveIndex(activeIndex === index ? null : index);
   };
   const images = [image1, image2, image3, image4];
-  const [mainImage, setMainImage] = useState(pkg.image || images[0]);
+  const [mainImage, setMainImage] = useState(pkg.imageUrls || images[0]);
   const cards = [
     { title: "What's Included", content: "Details about what's included..." },
     { title: "FAQs", content: "Details about what's not included..." },
@@ -95,7 +95,7 @@ const DinningInnerPage = () => {
         <img src={mainImage} alt={pkg.name || 'Main View'} />
       </div>
       <div className="image-thumbnails">
-        {images.map((image, index) => (
+        {pkg.imageUrls.map((image, index) => (
           <img
             key={index}
             src={image}
@@ -110,7 +110,7 @@ const DinningInnerPage = () => {
         <h1>{pkg.packageName || 'Luxury Room'}</h1>
         <div className="mobile-carousel">
           <Carousel showThumbs={false}>
-            {images.map((image, index) => (
+            {pkg.imageUrls.map((image, index) => (
               <div key={index}>
                 <img src={image} alt={`Slide ${index}`} />
               </div>
@@ -120,7 +120,13 @@ const DinningInnerPage = () => {
         <h2>{pkg.description || 'Designed to be a haven for the senses and an oasis of luxury.'}</h2>
         <p className="price">₹{pkg.price || '23000'}/-</p>
         <div className="ratings">
-          <span>⭐⭐⭐⭐⭐</span>
+          <span>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+              </span>
           <span>10 reviews</span>
         </div>
         <div className="actions">
@@ -189,33 +195,38 @@ const DinningInnerPage = () => {
 
     {/* Reviews */}
     <div className="reviews-container">
-      <div className="reviews-section">
-        <h2>Reviews ({allReviews.length})</h2>
-        {reviewsToDisplay.map((review, index) => (
-          <div key={index} className="review">
-            <img src={review.imgSrc} alt="reviewer" className="reviewer-img" />
-            <div className="review-details">
-              <h3>{review.name}</h3>
-              <p className="rating">{'⭐'.repeat(review.rating)}</p>
-              <p className="date">{review.date}</p>
-              <p className="comment">{review.comment}</p>
-            </div>
-          </div>
-        ))}
-        {!showAll && (
-          <button onClick={() => setShowAll(true)} className="read-more">
-            Read More...
-          </button>
-        )}
+  <div className="reviews-section">
+    <h2>Reviews ({allReviews.length})</h2>
+    {reviewsToDisplay.map((review, index) => (
+      <div key={index} className="review">
+        <img src={review.imgSrc} alt="reviewer" className="reviewer-img" />
+        <div className="review-details">
+          <h3>{review.name}</h3>
+          <p className="rating">
+            {Array(review.rating).fill().map((_, i) => (
+              <i key={i} className="fa-solid fa-star"></i>
+            ))}
+          </p>
+          <p className="date">{review.date}</p>
+          <p className="comment">{review.comment}</p>
+        </div>
       </div>
-      <div className="similar-section">
-        <h2>Similar</h2>
-        <img src={similarImage} alt="Similar" className="similar-img" />
-      </div>
-      <button onClick={handleBookingPage} className="booking-button">
-        Go to Booking Page
+    ))}
+    {!showAll && (
+      <button onClick={() => setShowAll(true)} className="read-more">
+        Read More...
       </button>
-    </div>
+    )}
+  </div>
+  <div className="similar-section">
+    <h2>Similar</h2>
+    <img src={similarImage} alt="Similar" className="similar-img" />
+  </div>
+  <button onClick={handleBookingPage} className="booking-button">
+    Go to Booking Page
+  </button>
+</div>
+
     </>
   );
 };

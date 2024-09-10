@@ -9,6 +9,7 @@ import BookingForm from './Components/Booking/BookingForm'
 import PaymentPage from './Components/PaymentPage/PaymentPage'
 import DiningBooking from './Components/Dining/DiningBooking'
 import DiningInnerPage from './Components/Dining/DiningInnerPage'
+import DragonflyHotel from './Components/DragonflyRooms/Drgonflyhotel'
 const App = () => {
   return (
     <>
@@ -23,6 +24,7 @@ const App = () => {
       <Route path="/payment" element={<PaymentPage/>} />
       <Route path="/Dining" element={<DiningBooking/>} />
       <Route path="/dining-inner" element={<DiningInnerPage/>} />
+      <Route path="/drognflyhotel" element={<DragonflyHotel/>} />
     </Routes>
     <Footer/>
     </BrowserRouter>

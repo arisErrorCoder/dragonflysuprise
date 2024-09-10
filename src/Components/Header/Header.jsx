@@ -58,9 +58,9 @@ const Header = () => {
                     <img src={packagesIcon} alt="Group Packages Icon" />
                     Suprise Planner
                 </li>
-                <li onClick={() => handleNavigation('/Recommendations')}>
-                    <img src={recommendationsIcon} alt="Recommendations Icon" />
-                    Recommendations
+                <li onClick={() => handleNavigation('/drognflyhotel')}>
+                    <img src={recommendationsIcon} alt="Drgonfly Hotel" />
+                    Drgonfly Hotel
                 </li>
             </ul>
         </nav>
